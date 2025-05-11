@@ -12,20 +12,19 @@ This script streamlines the process of data ingestion, preprocessing, text trans
 ---
 ### 💡 **File Strcuture:**
 
-project/
-│
-├── data/
-│   ├── raw/
+📦 project
+├── 📂 data
+│   ├── 📂 raw
 │   │   ├── train.csv
 │   │   └── test.csv
-│   └── interim/
+│   └── 📂 interim
 │       ├── train_processed_data.csv
 │       └── test_processed_data.csv
-│
-├── logs/
+├── 📂 logs
 │   └── data_preprocessing.log
-│
-├── preprocess.py
+├── 📂 src
+│   └── data_ingestion.py
+│   └── data_preprocessing.py
 └── README.md
 
 ---
