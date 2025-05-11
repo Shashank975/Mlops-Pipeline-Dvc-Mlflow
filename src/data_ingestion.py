@@ -81,9 +81,13 @@ def save_data(train_data: pd.DataFrame, test_data: pd.DataFrame, data_path: str)
 
 
 
-data_url = "https://raw.githubusercontent.com/Shashank975/Mlops-Pipeline-Dvc-Mlflow/refs/heads/main/Experiments/spam.csv"
-load_data(data_url)
-df = load_data(data_url)
-final_df = preprocess_data(df)
-train_data, test_data = train_test_split(final_df, test_size=0.2, random_state=2)
-save_data(train_data, test_data, data_path='./data')
+# Main function
+def main():
+    data_url = "https://raw.githubusercontent.com/Shashank975/Mlops-Pipeline-Dvc-Mlflow/refs/heads/main/Experiments/spam.csv"
+    df = load_data(data_url)
+    final_df = preprocess_data(df)
+    train_data, test_data = train_test_split(final_df, test_size=0.2, random_state=2)
+    save_data(train_data, test_data, data_path='./data')
+
+if __name__ == "__main__":
+    main()
