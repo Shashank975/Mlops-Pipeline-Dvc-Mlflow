@@ -1,17 +1,24 @@
 # Mlops-Pipeline-Dvc-Mlflow
+
 Learning about the "MLOPS".
 
+---
 
-### 💡 **Author : Shashank Chhoker**
+## 💡 Author
 
-# 🌟 Data Ingestion and Preprocessing Pipeline
-
-This script streamlines the process of data ingestion, preprocessing, text transformation, and dataset splitting for a spam classification project, complete with robust logging for every step. Here's what it does:
-
+Shashank Chhoker
 
 ---
-### 💡 **File Strcuture:**
 
+## 🌟 Data Ingestion and Preprocessing Pipeline
+
+This project provides a comprehensive pipeline for data ingestion, preprocessing, text transformation, and dataset splitting for a spam classification task. The pipeline is equipped with robust logging at each step for effective monitoring and debugging.
+
+---
+
+## 📂 File Structure
+
+```
 📦 project
 ├── 📂 data
 │   ├── 📂 raw
@@ -23,13 +30,14 @@ This script streamlines the process of data ingestion, preprocessing, text trans
 ├── 📂 logs
 │   └── data_preprocessing.log
 ├── 📂 src
-│   └── data_ingestion.py
+│   ├── data_ingestion.py
 │   └── data_preprocessing.py
 └── README.md
+```
 
 ---
 
-### ✅ **Logging Configuration:**
+## ✅ Logging Configuration
 
 * Creates a `logs` directory (if not already present).
 * Configures a logger to output to both the console and a log file (`data_ingestion.log`, `data_preprocessing.log`).
@@ -37,15 +45,15 @@ This script streamlines the process of data ingestion, preprocessing, text trans
 
 ---
 
-### 📦 **Data Loading (`load_data`):**
+## 📦 Data Loading (`load_data`)
 
 * Accepts a URL to load a CSV file using **pandas**.
 * Logs the data loading status for monitoring.
-* Catches parsing errors and other exceptions, logging them effectively.
+* Handles parsing errors and other exceptions with appropriate logging.
 
 ---
 
-### 🛠️ **Data Preprocessing (`preprocess_data` & `process_df`):**
+## 🛠️ Data Preprocessing (`preprocess_data` & `process_df`)
 
 * Removes unnecessary columns: `Unnamed: 2`, `Unnamed: 3`, `Unnamed: 4`.
 * Renames columns: `v1` → `target`, `v2` → `text`.
@@ -55,11 +63,11 @@ This script streamlines the process of data ingestion, preprocessing, text trans
   * Removing punctuations
   * Removing stopwords
   * Applying stemming using **NLTK's PorterStemmer**
-* Handles missing columns and general exceptions with appropriate logging.
+* Handles missing columns and general exceptions with effective logging.
 
 ---
 
-### 🛠️ **Text Transformation (`transform_text`):**
+## 🛠️ Text Transformation (`transform_text`)
 
 * Converts text to lowercase.
 * Splits text into words and removes punctuations.
@@ -69,7 +77,7 @@ This script streamlines the process of data ingestion, preprocessing, text trans
 
 ---
 
-### 💾 **Data Saving (`save_data`):**
+## 💾 Data Saving (`save_data`)
 
 * Saves the processed training and testing datasets to the specified data path.
 * Directory structure:
@@ -82,7 +90,7 @@ This script streamlines the process of data ingestion, preprocessing, text trans
 
 ---
 
-### 🚀 **Pipeline Execution:**
+## 🚀 Pipeline Execution
 
 * Loads data from the specified URL.
 * Preprocesses the data, removing unnecessary columns and renaming the relevant ones.
@@ -92,7 +100,7 @@ This script streamlines the process of data ingestion, preprocessing, text trans
 
 ---
 
-### 🔧 **How to Run:**
+## 🔧 How to Run
 
 1. **Install required libraries:**
 
@@ -125,30 +133,28 @@ This script streamlines the process of data ingestion, preprocessing, text trans
 
 ---
 
-### 🌐 **Dataset Source:**
+## 🌐 Dataset Source
 
 * The dataset URL is predefined in the script, pointing to a sample spam dataset hosted on GitHub.
 
 ---
 
-### 💡 **Notes:**
+## 💡 Notes
 
 * The logging system ensures comprehensive tracking of every step, making debugging and monitoring easier.
 * The project structure is organized for scalability and future enhancements.
 
 ---
 
-### 💡 **Sample Log Output:**
+## 💡 Sample Log Output
 
+```
 2025-05-12 10:45:01 -- DEBUG -- data_preprocessing -- Start Processing the DataFrame
 2025-05-12 10:45:01 -- DEBUG -- data_preprocessing -- Target Column labeled properly
 2025-05-12 10:45:02 -- DEBUG -- data_preprocessing -- Duplicates removed
 2025-05-12 10:45:02 -- DEBUG -- data_preprocessing -- Text column transformed properly
+```
 
 ---
 
 🚀 Happy Coding!
-
-
-
-
