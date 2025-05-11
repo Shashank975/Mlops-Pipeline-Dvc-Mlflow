@@ -1,1 +1,2 @@
-conda activate ml_pipeline
+conda activate ml_pipeline -- For Office Laptop
+conda activate dvc_mlops  -- For Personal laptop
