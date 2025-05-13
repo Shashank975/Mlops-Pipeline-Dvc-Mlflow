@@ -36,24 +36,32 @@ logger.addHandler(file_handeler)
 logger.debug("All the Logs for the feature Engineering are Setup!")
 
 
-
-def load_data(file_path:str)->pd.DataFrame:
+def load_data(file_path: str) -> pd.DataFrame:
     try:
         df = pd.read_csv(file_path)
-        df.fillna('',inplace=True)
+        df.fillna('', inplace=True)
+        logger.debug(f"Data Columns: {df.columns.tolist()}")
         logger.debug("Data has been loaded Successfully and we also Fill the Gap!")
+        return df
 
     except FileNotFoundError as e:
-        logger.error("Failed to parse the CSV file: %s",e)
+        logger.error("Failed to parse the CSV file: %s", e)
         raise
     except Exception as e:
-        logger.error("There is some unexpected error occured %s ", e)
+        logger.error("There is some unexpected error occurred: %s", e)
         raise
 
 
-def apply_tfidf(train_data:pd.DataFrame,test_data:pd.DataFrame,max_features:int)->tuple:
 
+def apply_tfidf(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: int) -> tuple:
     try:
+        # Ensure required columns are present
+        required_columns = ['text', 'target']
+        for col in required_columns:
+            if col not in train_data.columns or col not in test_data.columns:
+                logger.error(f"Missing column '{col}' in the data.")
+                raise ValueError(f"Missing column '{col}' in the data.")
+
         vectorize = TfidfVectorizer(max_features=max_features)
 
         X_train = train_data['text'].values
@@ -62,11 +70,7 @@ def apply_tfidf(train_data:pd.DataFrame,test_data:pd.DataFrame,max_features:int)
         y_test = test_data['target'].values
 
         X_train_bow = vectorize.fit_transform(X_train)
-        X_test_bow =vectorize.transform(X_test)
-
-
-        train_df = pd.DataFrame(X_train_bow.toarray())
-        train_df['label'] = y_train
+        X_test_bow = vectorize.transform(X_test)
 
         train_df = pd.DataFrame(X_train_bow.toarray())
         train_df['label'] = y_train
@@ -74,13 +78,12 @@ def apply_tfidf(train_data:pd.DataFrame,test_data:pd.DataFrame,max_features:int)
         test_df = pd.DataFrame(X_test_bow.toarray())
         test_df['label'] = y_test
 
+        logger.debug("Tfidf is being applied on the data.")
+        return train_df, test_df
 
-        logger.debug("Tfidf is being applied on the data :")
-        return train_df , test_df
-
-
-    except Exception as  e:
-        logger.error("Unexpected Error Occured %s",e) 
+    except Exception as e:
+        logger.error("Unexpected Error Occurred: %s", e)
+        return pd.DataFrame(), pd.DataFrame()
 
 
 def save_data(df:pd.DataFrame,file_path:str):
@@ -92,21 +95,29 @@ def save_data(df:pd.DataFrame,file_path:str):
     except Exception as e:
         logger.error("Unexpected error occurred while saving the data:%s",e)
         raise
+
+
+    
 def main():
     try:
-        
         max_features = 50
+        
+        base_path = "C:/Users/ShashankChhoker/Desktop/Shashank_work/Mlops-Pipeline-Dvc-Mlflow/data/interim"
+        train_data_path = os.path.join(base_path, "train_processed_data.csv")
+        test_data_path = os.path.join(base_path, "test_processed_data.csv")
 
-        train_data = load_data('./data/interim/train_processed.csv')
-        test_data = load_data('./data/interim/test_processed.csv')
+        train_data = load_data(train_data_path)
+        test_data = load_data(test_data_path)
 
         train_df, test_df = apply_tfidf(train_data, test_data, max_features)
 
-        save_data(train_df, os.path.join("./data", "processed", "train_tfidf.csv"))
-        save_data(test_df, os.path.join("./data", "processed", "test_tfidf.csv"))
+        processed_path = os.path.join("C:/Users/ShashankChhoker/Desktop/Shashank_work/Mlops-Pipeline-Dvc-Mlflow/data", "processed")
+        save_data(train_df, os.path.join(processed_path, "train_tfidf.csv"))
+        save_data(test_df, os.path.join(processed_path, "test_tfidf.csv"))
     except Exception as e:
         logger.error('Failed to complete the feature engineering process: %s', e)
         print(f"Error: {e}")
+
 
 if __name__ == '__main__':
     main()
