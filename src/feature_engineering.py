@@ -35,6 +35,7 @@ logger.addHandler(file_handeler)
 
 logger.debug("All the Logs for the feature Engineering are Setup!")
 
+# Here we loading the data from the Folder name "data/interim" where we have 2 files Train.csv and text.csv we will gonna apply the load_data function on both csv one by one.
 
 def load_data(file_path: str) -> pd.DataFrame:
     try:

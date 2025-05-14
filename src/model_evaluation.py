@@ -31,6 +31,11 @@ logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
 
+
+
+
+# Here we loading the params that we already imerge from the  "Params.yaml"
+
 def load_params(params_path: str) -> dict:
     """Load parameters from a YAML file."""
     try:
@@ -48,6 +53,10 @@ def load_params(params_path: str) -> dict:
         logger.error('Unexpected error: %s', e)
         raise
 
+
+
+
+# Here we loading the Model that we already trained in the Training part (model_training.py) and saved as a pickel file. 
 
 def load_model(file_path: str):
     """Load the trained model from a file."""
@@ -68,6 +77,9 @@ def load_model(file_path: str):
         raise
 
 
+
+# Here we loading the test csv that we already processed in the Training part (test_tfidf.csv) and saved as a csv. 
+
 def load_data(file_path: str) -> pd.DataFrame:
     """Load data from a CSV file."""
     try:
@@ -80,6 +92,11 @@ def load_data(file_path: str) -> pd.DataFrame:
     except Exception as e:
         logger.error('Unexpected error occurred while loading the data: %s', e)
         raise
+
+
+
+
+# Here we are testing our trained model and testing its accuracy in short its performance.
 
 def evaluate_model(clf, X_test: np.ndarray, y_test: np.ndarray) -> dict:
     """Evaluate the model and return the evaluation metrics."""
@@ -104,6 +121,11 @@ def evaluate_model(clf, X_test: np.ndarray, y_test: np.ndarray) -> dict:
         logger.error('Error during model evaluation: %s', e)
         raise
 
+
+
+# Here we are saving the our matrics which is the Output of our model performance . 
+
+
 def save_metrics(metrics: dict, file_path: str) -> None:
     """Save the evaluation metrics to a JSON file."""
     try:
@@ -116,6 +138,10 @@ def save_metrics(metrics: dict, file_path: str) -> None:
     except Exception as e:
         logger.error('Error occurred while saving the metrics: %s', e)
         raise
+
+
+
+
 
 def main():
     try:
